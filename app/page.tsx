@@ -1,11 +1,11 @@
 'use client';
 
+import ErrorMessage from '@/components/ErrorMessage';
 import LocationInput from '@/components/LocationInput';
 import { WeatherCard } from '@/components/WeatherCard';
 import { defaultWeather } from '@/utils/defaultWeather';
-import React, { useState } from 'react';
 import { format } from 'date-fns';
-import ErrorMessage from '@/components/ErrorMessage';
+import React, { useState } from 'react';
 
 export default function Home() {
 	const [weatherData, setWeatherData] = useState<Weather>(defaultWeather);

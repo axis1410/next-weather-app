@@ -1,8 +1,6 @@
-import PropTypes from 'prop-types';
 import { FaSearch } from 'react-icons/fa';
 
 interface LocationInputProps {
-	// handleSubmit: () => void;
 	location: string;
 	setLocation: (value: string) => void;
 	handleSubmit: any;
