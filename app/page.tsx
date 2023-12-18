@@ -22,7 +22,7 @@ export default function Home() {
 		e.preventDefault();
 		try {
 			const res = await fetch(
-				`http://api.weatherapi.com/v1/current.json?key=${key}&q=${location.toString()}&aqi=yes`
+				`https://api.weatherapi.com/v1/current.json?key=${key}&q=${location.toString()}&aqi=yes`
 			);
 
 			if (!res.ok) {
