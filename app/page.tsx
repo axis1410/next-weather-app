@@ -1,6 +1,6 @@
 'use client';
 
-import AirQualityCard from '@/components/AirQualityCard';
+import AirQualityCard from '@/components/OtherData';
 import ErrorMessage from '@/components/ErrorMessage';
 import LocationInput from '@/components/LocationInput';
 import { WeatherCard } from '@/components/WeatherCard';
@@ -8,6 +8,7 @@ import { airQualityLevel } from '@/utils/airQualityLevel';
 import { defaultWeather } from '@/utils/defaultWeather';
 import { convertTo12HourFormat } from '@/utils/timeFormat';
 import { useState } from 'react';
+import OtherData from '@/components/OtherData';
 
 export default function Home() {
 	const [weatherData, setWeatherData] = useState<Weather>(defaultWeather);
@@ -24,7 +25,7 @@ export default function Home() {
 		e.preventDefault();
 		try {
 			const res = await fetch(
-				`https://api.weatherapi.com/v1/current.json?key=${key}&q=${location.toString()}&aqi=yes`
+				`https://api.weatherapi.com/v1/forecast.json?key=${key}&q=${location.toString()}}&days=3&aqi=yes&alerts=yes`
 			);
 
 			if (!res.ok) {
@@ -41,6 +42,8 @@ export default function Home() {
 			setAirQualityText(airQuality?.toString());
 			setCurrentTime(formattedTime);
 			setWeatherData(data);
+
+			console.log(weatherData?.forecast.forecastday[0]);
 		} catch (err) {
 			console.log(err);
 		}
@@ -69,10 +72,15 @@ export default function Home() {
 						feelslike_c={weatherData?.current.feelslike_c}
 						temp_f={weatherData?.current.temp_f}
 						feelslike_f={weatherData?.current.feelslike_f}
-						currentTime={currentTime}
 						isCelcius={isCelcius}
 					/>
-					<AirQualityCard airQualityText={airQualityText} />
+					<OtherData
+						airQualityText={airQualityText}
+						cloud={weatherData?.current.cloud}
+						sunrise={weatherData?.forecast.forecastday[0].astro.sunrise}
+						sunset={weatherData?.forecast.forecastday[0].astro.sunset}
+						currentTime={currentTime}
+					/>
 				</div>
 			) : (
 				<ErrorMessage
