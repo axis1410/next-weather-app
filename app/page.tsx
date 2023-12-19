@@ -7,7 +7,7 @@ import { WeatherCard } from '@/components/WeatherCard';
 import { airQualityLevel } from '@/utils/airQualityLevel';
 import { defaultWeather } from '@/utils/defaultWeather';
 import { convertTo12HourFormat } from '@/utils/timeFormat';
-import React, { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 
 export default function Home() {
 	const [weatherData, setWeatherData] = useState<Weather>(defaultWeather);
@@ -34,13 +34,7 @@ export default function Home() {
 			}
 
 			const data = await res.json();
-
 			const formattedTime = convertTo12HourFormat(data?.location.localtime);
-
-			// console.log(`us-epa-index: ${data?.current.air_quality['us-epa-index']}`);
-			// console.log(`gb-defra-index: ${data?.current.air_quality['gb-defra-index']}`);
-			// console.log(`Last updated: ${data?.current.last_updated}}`);
-
 			const airQuality = airQualityLevel(data?.current.air_quality['us-epa-index']);
 
 			// @ts-ignore
@@ -63,31 +57,29 @@ export default function Home() {
 				setLocation={setLocation}
 				handleSubmit={handleSubmit}
 			/>
-			<div className=''>
-				{weatherData?.location.name !== '' ? (
-					<div className=' flex items-center justify-around flex-col'>
-						<WeatherCard
-							name={weatherData?.location.name}
-							country={weatherData?.location.country}
-							condition={weatherData?.current.condition.text}
-							icon={`http:${weatherData?.current.condition.icon}`}
-							feelsLike={weatherData?.current.feelslike_c}
-							temp_c={weatherData?.current.temp_c}
-							feelslike_c={weatherData?.current.feelslike_c}
-							temp_f={weatherData?.current.temp_f}
-							feelslike_f={weatherData?.current.feelslike_f}
-							currentTime={currentTime}
-							isCelcius={isCelcius}
-						/>
-						<AirQualityCard airQualityText={airQualityText} />
-					</div>
-				) : (
-					<ErrorMessage
-						isError={isError}
-						error={error}
+			{weatherData?.location.name !== '' ? (
+				<div className=' flex items-center justify-around flex-col'>
+					<WeatherCard
+						name={weatherData?.location.name}
+						country={weatherData?.location.country}
+						condition={weatherData?.current.condition.text}
+						icon={`http:${weatherData?.current.condition.icon}`}
+						feelsLike={weatherData?.current.feelslike_c}
+						temp_c={weatherData?.current.temp_c}
+						feelslike_c={weatherData?.current.feelslike_c}
+						temp_f={weatherData?.current.temp_f}
+						feelslike_f={weatherData?.current.feelslike_f}
+						currentTime={currentTime}
+						isCelcius={isCelcius}
 					/>
-				)}
-			</div>
+					<AirQualityCard airQualityText={airQualityText} />
+				</div>
+			) : (
+				<ErrorMessage
+					isError={isError}
+					error={error}
+				/>
+			)}
 			<button
 				className='fixed bottom-0 right-0 sm:h-20 sm:w-20 h-10 w-10 rounded-full sm:m-10 m-4 bg-black hover:bg-gray-900 text-white text-lg sm:text-3xl'
 				onClick={handleChangeUnits}

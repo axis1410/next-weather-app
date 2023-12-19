@@ -5,7 +5,7 @@ interface ErrorMessageProps {
 
 const ErrorMessage = ({ error, isError }: ErrorMessageProps) => {
 	return (
-		<div className={`text-5xl text-center ${isError ? 'text-red-500' : 'text-white'}`}>
+		<div className={`text-5xl text-center ${isError ? 'text-gray-100' : 'text-white'}`}>
 			{error}
 		</div>
 	);
