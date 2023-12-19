@@ -13,10 +13,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang='en'>
-			{/* <body
+			<body
 				className={`${inter.className} bg-gradient-to-r from-lapis_lazuli-700 to-indigo-500 h-screen flex flex-col px-10 pt-10 pb-5`}
-			> */}
-			<body className={`${inter.className} bg-black h-screen flex flex-col px-10 pt-10 pb-5`}>
+			>
 				<h1 className='text-3xl sm:text-5xl text-white font-bold'>Axis Weather</h1>
 				{children}
 				<footer className='flex justify-center items-end text-sm sm:text-lg text-white font-semibold'>

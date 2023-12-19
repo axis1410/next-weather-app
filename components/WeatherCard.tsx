@@ -11,6 +11,7 @@ interface WeatherCardProps {
 	temp_f: number;
 	feelslike_f: number;
 	isCelcius: boolean;
+	currentTime: string;
 }
 
 export const WeatherCard = ({
@@ -22,6 +23,7 @@ export const WeatherCard = ({
 	temp_f,
 	feelslike_c,
 	feelslike_f,
+	currentTime,
 	isCelcius,
 }: WeatherCardProps) => {
 	return (
@@ -51,12 +53,9 @@ export const WeatherCard = ({
 							<span>{feelslike_f} &deg;F</span>
 						)}
 					</p>
+					<p className='text-4xl sm:text-6xl py-10 text-white '>{currentTime}</p>
 				</div>
 			</div>
 		</div>
 	);
 };
-
-{
-	/* {isCelcius ? <span>{temp_c} &deg;C</span> : <span>{temp_f} &deg;F</span>} */
-}

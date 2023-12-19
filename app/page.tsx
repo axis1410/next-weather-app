@@ -1,12 +1,10 @@
 'use client';
 
-import AirQualityCard from '@/components/OtherData';
 import ErrorMessage from '@/components/ErrorMessage';
 import LocationInput from '@/components/LocationInput';
 import { WeatherCard } from '@/components/WeatherCard';
 import { airQualityLevel } from '@/utils/airQualityLevel';
 import { defaultWeather } from '@/utils/defaultWeather';
-import { convertTo12HourFormat } from '@/utils/timeFormat';
 import { useState } from 'react';
 import OtherData from '@/components/OtherData';
 
@@ -35,12 +33,11 @@ export default function Home() {
 			}
 
 			const data = await res.json();
-			const formattedTime = convertTo12HourFormat(data?.location.localtime);
 			const airQuality = airQualityLevel(data?.current.air_quality['us-epa-index']);
 
 			// @ts-ignore
 			setAirQualityText(airQuality?.toString());
-			setCurrentTime(formattedTime);
+			setCurrentTime(data?.location.localtime.toString().slice(11));
 			setWeatherData(data);
 
 			console.log(weatherData?.forecast.forecastday[0]);
@@ -73,14 +70,9 @@ export default function Home() {
 						temp_f={weatherData?.current.temp_f}
 						feelslike_f={weatherData?.current.feelslike_f}
 						isCelcius={isCelcius}
-					/>
-					<OtherData
-						airQualityText={airQualityText}
-						cloud={weatherData?.current.cloud}
-						sunrise={weatherData?.forecast.forecastday[0].astro.sunrise}
-						sunset={weatherData?.forecast.forecastday[0].astro.sunset}
 						currentTime={currentTime}
 					/>
+					<OtherData airQualityText={airQualityText} />
 				</div>
 			) : (
 				<ErrorMessage
