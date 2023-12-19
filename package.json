@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "aqi": "^0.1.1",
+    "aqi-pollutant-calculator": "^1.5.0",
     "date-fns": "^3.0.0",
     "moments": "^0.0.2",
     "next": "14.0.4",
