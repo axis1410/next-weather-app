@@ -10,8 +10,8 @@ interface WeatherCardProps {
 	feelslike_c: number;
 	temp_f: number;
 	feelslike_f: number;
-	currentTime: string;
 	isCelcius: boolean;
+	currentTime: string;
 }
 
 export const WeatherCard = ({
@@ -27,31 +27,34 @@ export const WeatherCard = ({
 	isCelcius,
 }: WeatherCardProps) => {
 	return (
-		<div className='glassmorphism text-center sm:text-left w-full md:w-3/4 flex flex-row px-5 py-20 items-stretch justify-around'>
-			<div className=''>
-				<h1 className='text-white font-bold text-4xl'>
-					{name}, {country}
-				</h1>
-				<p className='text-2xl text-white'>Current weather</p>
-				<p className='text-lg text-white'>{currentTime}</p>
-			</div>
-			<div className=''>
-				<Image
-					src={icon}
-					alt={condition}
-					height={100}
-					width={100}
-				/>
-			</div>
-			<div className=''>
-				<p className='text-5xl text-white font-semibold'>
-					{isCelcius ? <span>{temp_c} &deg;C</span> : <span>{temp_f} &deg;F</span>}
-				</p>
-
-				<p className='text-lg text-white'>
-					Feels like{' '}
-					{isCelcius ? <span>{feelslike_c} &deg;C</span> : <span>{feelslike_f} &deg;F</span>}
-				</p>
+		<div className='glassmorphism w-full md:w-3/4 px-2 py-5 text-center'>
+			<div className='text-center'>
+				<div>
+					<h1 className='sm:text-4xl text-3xl sm:font-bold font-semibold text-white'>
+						{name}, {country}
+					</h1>
+				</div>
+				<div className='flex flex-col items-center'>
+					<Image
+						src={icon}
+						alt={condition}
+						width={100}
+						height={100}
+					/>
+					<p className='text-2xl sm:text-3xl text-white font-semibold'>
+						{isCelcius ? <span>{temp_c} &deg;C</span> : <span>{temp_f} &deg;F</span>}
+					</p>
+					<p className='text-xl sm:text-2xl text-white font-medium'>{condition}</p>
+					<p className='text-lg sm:text-xl text-white font-medium'>
+						Feels like{' '}
+						{isCelcius ? (
+							<span>{feelslike_c} &deg;c</span>
+						) : (
+							<span>{feelslike_f} &deg;F</span>
+						)}
+					</p>
+					<p className='text-4xl sm:text-6xl py-10 text-white '>{currentTime}</p>
+				</div>
 			</div>
 		</div>
 	);
