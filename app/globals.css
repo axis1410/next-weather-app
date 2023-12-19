@@ -5,19 +5,3 @@
 .glassmorphism {
 	@apply bg-gray-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-20 border border-gray-100;
 }
-
-.glassmorphism-green {
-	@apply bg-green-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-20 border border-green-100;
-}
-
-.glassmorphism-yellow {
-	@apply bg-yellow-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-20 border border-yellow-100;
-}
-
-.glassmorphism-orange {
-	@apply bg-orange-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-20 border border-orange-100;
-}
-
-.glassmorphism-red {
-	@apply bg-red-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-20 border border-red-100;
-}

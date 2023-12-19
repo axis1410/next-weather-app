@@ -1,12 +1,13 @@
 'use client';
 
+import AirQualityCard from '@/components/AirQualityCard';
 import ErrorMessage from '@/components/ErrorMessage';
 import LocationInput from '@/components/LocationInput';
 import { WeatherCard } from '@/components/WeatherCard';
-import { calculateAQI } from '@/utils/calculateAirQuality';
+import { airQualityLevel } from '@/utils/airQualityLevel';
 import { defaultWeather } from '@/utils/defaultWeather';
 import { convertTo12HourFormat } from '@/utils/timeFormat';
-import React, { useState } from 'react';
+import React, { SetStateAction, useState } from 'react';
 
 export default function Home() {
 	const [weatherData, setWeatherData] = useState<Weather>(defaultWeather);
@@ -15,7 +16,7 @@ export default function Home() {
 	const [isError, setIsError] = useState(false);
 	const [isCelcius, setIsCelcius] = useState(true);
 	const [currentTime, setCurrentTime] = useState('');
-	const [airQuality, setAirQuality] = useState(0);
+	const [airQualityText, setAirQualityText] = useState('');
 
 	const key = 'c6820101499c4cc394975207231812';
 
@@ -35,16 +36,15 @@ export default function Home() {
 			const data = await res.json();
 
 			const formattedTime = convertTo12HourFormat(data?.location.localtime);
-			const airQuality = calculateAQI({
-				co: data?.current.air_quality.co,
-				no2: data?.current.air_quality.no2,
-				ozone: data?.current.air_quality.o3,
-				so2: data?.current.air_quality.so2,
-				pm25: data?.current.air_quality.pm2_5,
-				pm10: data?.current.air_quality.pm10,
-			});
 
-			setAirQuality(airQuality);
+			// console.log(`us-epa-index: ${data?.current.air_quality['us-epa-index']}`);
+			// console.log(`gb-defra-index: ${data?.current.air_quality['gb-defra-index']}`);
+			// console.log(`Last updated: ${data?.current.last_updated}}`);
+
+			const airQuality = airQualityLevel(data?.current.air_quality['us-epa-index']);
+
+			// @ts-ignore
+			setAirQualityText(airQuality?.toString());
 			setCurrentTime(formattedTime);
 			setWeatherData(data);
 		} catch (err) {
@@ -57,17 +57,15 @@ export default function Home() {
 	};
 
 	return (
-		<div className='bg-gradient-to-r from-lapis_lazuli-700 to-indigo-500 h-screen flex flex-col px-10 py-10'>
-			<h1 className='text-5xl text-white font-bold'>Axis Weather</h1>
-			<br />
+		<div className=' h-screen flex flex-col px-2 py-10'>
 			<LocationInput
 				location={location}
 				setLocation={setLocation}
 				handleSubmit={handleSubmit}
 			/>
-			<div className='flex justify-center items-center'>
+			<div className=''>
 				{weatherData?.location.name !== '' ? (
-					<>
+					<div className=' flex items-center justify-around flex-col'>
 						<WeatherCard
 							name={weatherData?.location.name}
 							country={weatherData?.location.country}
@@ -81,7 +79,8 @@ export default function Home() {
 							currentTime={currentTime}
 							isCelcius={isCelcius}
 						/>
-					</>
+						<AirQualityCard airQualityText={airQualityText} />
+					</div>
 				) : (
 					<ErrorMessage
 						isError={isError}
@@ -90,7 +89,7 @@ export default function Home() {
 				)}
 			</div>
 			<button
-				className='fixed bottom-0 right-0 h-20 w-20 rounded-full m-10 bg-black hover:bg-gray-900 text-white text-3xl'
+				className='fixed bottom-0 right-0 sm:h-20 sm:w-20 h-10 w-10 rounded-full sm:m-10 m-4 bg-black hover:bg-gray-900 text-white text-lg sm:text-3xl'
 				onClick={handleChangeUnits}
 			>
 				{isCelcius ? 'C' : 'F'}

@@ -53,7 +53,7 @@ export const WeatherCard = ({
 		// 		</p>
 		// 	</div>
 		// </div>
-		<div className='glassmorphism text-center sm:text-left w-full md:w-1/2 flex flex-row px-5 py-20 items-stretch justify-around'>
+		<div className='glassmorphism text-center sm:text-left w-full md:w-3/4 flex flex-row px-5 py-20 items-stretch justify-around'>
 			<div className=''>
 				<h1 className='text-white font-bold text-4xl'>
 					{name}, {country}
